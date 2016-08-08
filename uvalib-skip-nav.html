@@ -1,0 +1,47 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+`uvalib-skip-nav`
+Accessibility component that becomes visible on focus and allows for jumping to the main content.
+
+@demo demo/index.html
+-->
+
+<dom-module id="uvalib-skip-nav">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div>
+      <a href="{{contentId}}">{{skipNavText}}</a>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'uvalib-skip-nav',
+
+      properties: {
+        /**
+         *
+         */
+        contentId: {
+          type: String,
+          value: 'mainContent',
+        },
+
+        /**
+         *
+         */
+        skipNavText: {
+          type: String,
+          value: 'Skip Navigation'
+        }
+      },
+
+    });
+  </script>
+</dom-module>
