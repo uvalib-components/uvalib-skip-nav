@@ -4,18 +4,64 @@
 `uvalib-skip-nav`
 Accessibility component that becomes visible on focus and allows for jumping to the main content.
 
+### Styling
+
+The following custom properties are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--uvalib-skip-nav-color` | Color of skip text | white
+`--uvalib-skip-nav-bkgrd-color` | Background color of skip hyperlink | red
+`--uvalib-skip-nav-border-color` | Border color of skip hyperlink | white
+
 @demo demo/index.html
 -->
 
 <dom-module id="uvalib-skip-nav">
   <template>
-    <style>
+    <style is="custom-style">
       :host {
         display: block;
+        --uvalib-skip-nav-color: white;
+        --uvalib-skip-nav-bkgrd-color: red;
+        --uvalib-skip-nav-border-color: white;
+      }
+
+      .skiptocontent a {
+        padding: 5px;
+        position: absolute;
+        top: -40px;
+        left: 0px;
+        color: var(--uvalib-skip-nav-color,white);
+        background-color: var(--uvalib-skip-nav-bkgrd-color,red);
+        border-right: 1px solid var(--uvalib-skip-nav-border-color,white);
+        border-bottom: 1px solid var(--uvalib-skip-nav-border-color,white);
+        border-bottom-right-radius: 8px;
+        z-index: 100;
+      }
+      @keyframes drop-in {
+        from {top: -40px;}
+        to {top: 0px;}
+      }
+      .skiptocontent a:focus {
+        animation: drop-in;
+        animation-duration: 1s;
+        animation-timing-function: ease-out;
+        animation-delay: .5s;
+        animation-iteration-count: 1;
+        animation-direction: normal;
+        animation-fill-mode: forwards;
+        -webkit-animation: drop-in;
+        -webkit-animation-duration: 1s;
+        -webkit-animation-timing-function: ease-out;
+        -webkit-animation-delay: .5s;
+        -webkit-animation-iteration-count: 1;
+        -webkit-animation-direction: normal;
+        -webkit-animation-fill-mode: forwards;
       }
     </style>
-    <div>
-      <a href="{{contentId}}">{{skipNavText}}</a>
+    <div class="skiptocontent">
+      <a href$="#{{contentId}}">{{skipText}}</a>
     </div>
   </template>
 
@@ -24,21 +70,26 @@ Accessibility component that becomes visible on focus and allows for jumping to 
 
       is: 'uvalib-skip-nav',
 
+      hostAttributes: {
+        tabindex: -1
+      },
+
       properties: {
+
         /**
-         *
+         * id attribute of the element to jump to
          */
         contentId: {
           type: String,
-          value: 'mainContent',
+          value: 'maincontent',
         },
 
         /**
-         *
+         * skip text to display
          */
-        skipNavText: {
+        skipText: {
           type: String,
-          value: 'Skip Navigation'
+          value: 'skip to main content'
         }
       },
 

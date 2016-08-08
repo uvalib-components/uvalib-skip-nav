@@ -21,9 +21,49 @@
       <demo-snippet>
         <template>
           <uvalib-skip-nav></uvalib-skip-nav>
+          <nav role="navigation">
+            <a href="#item1">Navigation Item 1</a> |
+            <a href="#item2">Navigation Item 2</a>
+          </nav>
+          <div id="maincontent">
+            <p>This is some text in the main content area.</p>
+            <div id="item1">
+              <h3>Item 1</h3>
+              Item one content is located here.
+            </div>
+            <p>Here is some additional text in the main content area.</p>
+            <div id="#item2">
+              <h3>Item 2</h3>
+              Item two conten is located in this area.
+            </div>
+          </div>
         </template>
       </demo-snippet>
     </div>
 
+    <div class="vertical-section-container centered">
+      <h3>Alternate uvalib-skip-nav Demo</h3>
+      <demo-snippet>
+        <template>
+          <uvalib-skip-nav content-id="content" skip-text="Jump to Content"></uvalib-skip-nav>
+          <nav role="navigation">
+            <a href="#item1b">Navigation Item 1b</a> |
+            <a href="#item2b">Navigation Item 2b</a>
+          </nav>
+          <div id="content">
+            <p>This is some text in the main content area.</p>
+            <div id="item1b">
+              <h3>Item 1b</h3>
+              Item one content is located here.
+            </div>
+            <p>Here is some additional text in the main content area.</p>
+            <div id="#item2b">
+              <h3>Item 2b</h3>
+              Item two conten is located in this area.
+            </div>
+          </div>
+        </template>
+      </demo-snippet>
+    </div>
   </body>
 </html>
