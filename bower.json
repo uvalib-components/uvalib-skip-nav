@@ -3,7 +3,8 @@
   "description": "Accessibility component that becomes visible on focus and allows for jumping to the main content.",
   "main": "uvalib-skip-nav.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.4.0"
+    "polymer": "Polymer/polymer#^1.4.0",
+    "uvalib-theme": "uvalib-components/uvalib-theme"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

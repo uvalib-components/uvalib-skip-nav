@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../uvalib-theme/uvalib-common-styles.html">
 
 <!--
 `uvalib-skip-nav`
@@ -12,35 +13,33 @@ Custom property | Description | Default
 ----------------|-------------|----------
 `--uvalib-skip-nav-color` | Color of skip text | white
 `--uvalib-skip-nav-bkgrd-color` | Background color of skip hyperlink | red
-`--uvalib-skip-nav-border-color` | Border color of skip hyperlink | white
 
 @demo demo/index.html
 -->
 
 <dom-module id="uvalib-skip-nav">
   <template>
-    <style is="custom-style">
+    <style is="custom-style" include="uvalib-theme">
       :host {
         display: block;
         --uvalib-skip-nav-color: white;
         --uvalib-skip-nav-bkgrd-color: red;
-        --uvalib-skip-nav-border-color: white;
       }
 
       .skiptocontent a {
         padding: 5px;
         position: absolute;
-        top: -50px;
+        top: -40px;
         left: 0px;
         color: var(--uvalib-skip-nav-color,white);
         background-color: var(--uvalib-skip-nav-bkgrd-color,red);
-        border-right: 1px solid var(--uvalib-skip-nav-border-color,white);
-        border-bottom: 1px solid var(--uvalib-skip-nav-border-color,white);
+        border-right: 1px solid var(--color-primary-blue);
+        border-bottom: 1px solid var(--color-primary-blue);
         border-bottom-right-radius: 8px;
         z-index: 100;
       }
       @keyframes drop-in {
-        from {top: -50px;}
+        from {top: -40px;}
         to {top: 0px;}
       }
       .skiptocontent a:focus {
