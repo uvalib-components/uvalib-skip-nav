@@ -112,7 +112,7 @@ Custom property | Description | Default
         e.preventDefault();
         this.fire('skiptocontent', {skipToContent: true});
         console.log('skiptocontent fired');
-        this.$.skiptocontent.blur();
+        this.querySelector('a').blur();
       }
 
     });
