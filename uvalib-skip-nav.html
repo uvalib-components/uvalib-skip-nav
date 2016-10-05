@@ -25,7 +25,7 @@ Custom property | Description | Default
         --uvalib-skip-nav-color: white;
         --uvalib-skip-nav-bkgrd-color: red;
       }
-      .skiptocontent a {
+      #skiptocontent a {
         padding: 5px;
         position: absolute;
         top: -40px;
@@ -37,9 +37,9 @@ Custom property | Description | Default
         border-bottom-right-radius: 8px;
         z-index: 2000;
       }
-      a.skiptocontent:active,
-      a.skiptocontent:focus,
-      a.skip:hover {
+      a:active,
+      a:focus,
+      a:hover {
         left: 0;
         top: 0;
         width: auto;
@@ -50,7 +50,7 @@ Custom property | Description | Default
         from {top: -40px;}
         to {top: 0px;}
       }
-      .skiptocontent a:focus {
+      #skiptocontent a:focus {
         animation: drop-in;
         animation-duration: 1s;
         animation-timing-function: ease-out;
@@ -68,7 +68,7 @@ Custom property | Description | Default
       }
     </style>
     <iron-a11y-keys id="keys" target="[[_target]]" keys="enter" on-keys-pressed="jumpToContent"></iron-a11y-keys>
-    <div class="skiptocontent">
+    <div id="skiptocontent">
       <a href$="#{{contentId}}" on-tap="jumpToContent">{{skipText}}</a>
     </div>
   </template>
@@ -89,7 +89,7 @@ Custom property | Description | Default
          */
         contentId: {
           type: String,
-          value: 'maincontent',
+          value: 'content',
         },
 
         /**
@@ -103,7 +103,7 @@ Custom property | Description | Default
         _target: {
           type: Object,
           value: function() {
-            return this.$.skiptocontent;
+            return this.querySelector('a');
           }
         }
       },
@@ -111,6 +111,7 @@ Custom property | Description | Default
       jumpToContent: function(e, detail) {
         this.fire('skiptocontent', {skipToContent: true});
         console.log('skiptocontent fired');
+        this.$.skiptocontent.blur();
       }
 
     });
