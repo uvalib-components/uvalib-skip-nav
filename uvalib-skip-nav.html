@@ -111,7 +111,6 @@ Custom property | Description | Default
       jumpToContent: function(e, detail) {
         e.preventDefault();
         this.fire('skiptocontent', {skipToContent: true});
-        console.log('skiptocontent fired');
         this.querySelector('a').blur();
       }
 
