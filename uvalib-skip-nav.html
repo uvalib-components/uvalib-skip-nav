@@ -28,7 +28,7 @@ Custom property | Description | Default
       .skip-options-hidden {
         padding: 5px;
         position: absolute;
-        top: -40px;
+        top: -100px;
         left: 0px;
         color: var(--uvalib-skip-nav-color,white);
         background-color: var(--uvalib-skip-nav-bkgrd-color,red);
@@ -38,7 +38,7 @@ Custom property | Description | Default
         z-index: 2000;
       }
       @keyframes drop-in {
-        from {top: -40px;}
+        from {top: -100px;}
         to {top: 0px;}
       }
       a {
@@ -67,7 +67,7 @@ Custom property | Description | Default
     <iron-a11y-keys id="search-keys" target="[[_targetSearch]]" keys="enter" on-keys-pressed="jumpToSearch"></iron-a11y-keys>
     <iron-a11y-keys id="content-keys" target="[[_targetContent]]" keys="enter" on-keys-pressed="jumpToContent"></iron-a11y-keys>
     <div id="skip-options" class="skip-options-hidden" tabindex="0" on-focus="showSkipNavigation" on-blur="hideSkipNavigation" aria-label="Skip Navigation Options, 2 links">
-      <a id="search" href$="#{{searchId}}" on-tap="jumpToSearch" tabindex="">{{skipSearchText}}</a> |
+      <a id="search" href$="#{{searchId}}" on-tap="jumpToSearch" tabindex="">{{skipSearchText}}</a> <br/>
       <a id="content" href$="#{{contentId}}" on-tap="jumpToContent" tabindex="" on-blur="hideSkipNavigation" on-focus="showSkipNavigation">{{skipContentText}}</a>
     </div>
   </template>
