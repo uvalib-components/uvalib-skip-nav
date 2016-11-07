@@ -25,7 +25,7 @@ Custom property | Description | Default
         --uvalib-skip-nav-color: white;
         --uvalib-skip-nav-bkgrd-color: red;
       }
-      #skiptocontent a {
+      .skip-options-hidden {
         padding: 5px;
         position: absolute;
         top: -40px;
@@ -37,20 +37,17 @@ Custom property | Description | Default
         border-bottom-right-radius: 8px;
         z-index: 2000;
       }
-      a:active,
-      a:focus,
-      a:hover {
-        left: 0;
-        top: 0;
-        width: auto;
-        height: auto;
-        overflow: visible;
-      }
       @keyframes drop-in {
         from {top: -40px;}
         to {top: 0px;}
       }
-      #skiptocontent a:focus {
+      a {
+        color: var(--uvalib-skip-nav-color,white);
+        width: auto;
+        height: auto;
+        overflow: visible;
+      }
+      .skip-options-visible {
         animation: drop-in;
         animation-duration: 1s;
         animation-timing-function: ease-out;
@@ -67,9 +64,11 @@ Custom property | Description | Default
         -webkit-animation-fill-mode: forwards;
       }
     </style>
-    <iron-a11y-keys id="keys" target="[[_target]]" keys="enter" on-keys-pressed="jumpToContent"></iron-a11y-keys>
-    <div id="skiptocontent">
-      <a href$="#{{contentId}}" on-tap="jumpToContent">{{skipText}}</a>
+    <iron-a11y-keys id="search-keys" target="[[_targetSearch]]" keys="enter" on-keys-pressed="jumpToSearch"></iron-a11y-keys>
+    <iron-a11y-keys id="content-keys" target="[[_targetContent]]" keys="enter" on-keys-pressed="jumpToContent"></iron-a11y-keys>
+    <div id="skip-options" class="skip-options-hidden" tabindex="0" on-focus="showSkipNavigation" on-blur="hideSkipNavigation" aria-label="Skip Navigation Options, 2 links">
+      <a id="search" href$="#{{searchId}}" on-tap="jumpToSearch" tabindex="">{{skipSearchText}}</a> |
+      <a id="content" href$="#{{contentId}}" on-tap="jumpToContent" tabindex="" on-blur="hideSkipNavigation" on-focus="showSkipNavigation">{{skipContentText}}</a>
     </div>
   </template>
 
@@ -95,23 +94,72 @@ Custom property | Description | Default
         /**
          * skip text to display
          */
-        skipText: {
+        skipContentText: {
           type: String,
-          value: 'skip to main content'
+          value: 'Skip to main content.'
         },
 
-        _target: {
+        /**
+         * id attribute of the element to jump to
+         */
+        searchId: {
+          type: String,
+          value: 'search',
+        },
+
+        /**
+         * skip text to display
+         */
+        skipSearchText: {
+          type: String,
+          value: 'Skip to catalog search.'
+        },
+
+        _targetSearch: {
           type: Object,
           value: function() {
-            return this.querySelector('a');
+            return this.querySelector('#search');
           }
+        },
+
+        _targetContent: {
+          type: Object,
+          value: function() {
+            return this.querySelector('#content');
+          }
+        }
+      },
+
+      showSkipNavigation: function() {
+        console.log("tab in to skip options");
+        this.querySelector('#skip-options').classList.add('skip-options-visible');
+      },
+
+      jumpToSearch: function(e, detail) {
+        e.preventDefault();
+        console.log("search jump");
+        this.fire('skiptosearch', {skipToSearch: true});
+        this.querySelector('#skip-options').classList.toggle('skip-options-visible');
+      },
+
+      hideSkipNavigation: function(e) {
+        console.log(e.relatedTarget);
+        if (e.relatedTarget) {
+          if (e.relatedTarget.id == 'search') {
+            console.log("action from content");
+          } else {
+            this.querySelector('#skip-options').classList.toggle('skip-options-visible');
+          }
+        } else {
+          this.querySelector('#skip-options').classList.toggle('skip-options-visible');
         }
       },
 
       jumpToContent: function(e, detail) {
         e.preventDefault();
+        console.log("content jump");
         this.fire('skiptocontent', {skipToContent: true});
-        this.querySelector('a').blur();
+        this.querySelector('#skip-options').classList.toggle('skip-options-visible');
       }
 
     });

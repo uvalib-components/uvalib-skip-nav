@@ -25,6 +25,13 @@
             <a href="#item1">Navigation Item 1</a> |
             <a href="#item2">Navigation Item 2</a>
           </nav>
+          <div id="search">
+            <div id="item1b">
+              <h3>Search Box</h3>
+              <input type="text">
+              <button name="Search">
+            </div>
+          </div>
           <div id="content">
             <p>This is some text in the main content area.</p>
             <div id="item1">
@@ -34,7 +41,7 @@
             <p>Here is some additional text in the main content area.</p>
             <div id="#item2">
               <h3>Item 2</h3>
-              Item two conten is located in this area.
+              Item two content is located in this area.
             </div>
           </div>
         </template>
@@ -45,11 +52,18 @@
       <h3>Alternate uvalib-skip-nav Demo</h3>
       <demo-snippet>
         <template>
-          <uvalib-skip-nav content-id="maincontent" skip-text="Jump to Content"></uvalib-skip-nav>
+          <uvalib-skip-nav content-id="maincontent" skip-content-text="Jump to Content" search-id="catalogsearch" skip-search-text="Jump to Search"></uvalib-skip-nav>
           <nav role="navigation">
             <a href="#item1b">Navigation Item 1b</a> |
             <a href="#item2b">Navigation Item 2b</a>
           </nav>
+          <div id="catalogsearch">
+            <div id="item1b">
+              <h3>Search Box</h3>
+              <input type="text">
+              <button name="Search">
+            </div>
+          </div>
           <div id="maincontent">
             <p>This is some text in the main content area.</p>
             <div id="item1b">
@@ -59,7 +73,7 @@
             <p>Here is some additional text in the main content area.</p>
             <div id="#item2b">
               <h3>Item 2b</h3>
-              Item two conten is located in this area.
+              Item two content is located in this area.
             </div>
           </div>
         </template>
