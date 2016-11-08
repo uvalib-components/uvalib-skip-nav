@@ -131,13 +131,11 @@ Custom property | Description | Default
       },
 
       showSkipNavigation: function() {
-        console.log("tab in to skip options");
         this.querySelector('#skip-options').classList.add('skip-options-visible');
       },
 
       jumpToSearch: function(e, detail) {
         e.preventDefault();
-        console.log("search jump");
         this.fire('skiptosearch', {skipToSearch: true});
         this.querySelector('#skip-options').classList.toggle('skip-options-visible');
       },
@@ -146,7 +144,6 @@ Custom property | Description | Default
         console.log(e.relatedTarget);
         if (e.relatedTarget) {
           if (e.relatedTarget.id == 'search') {
-            console.log("action from content");
           } else {
             this.querySelector('#skip-options').classList.toggle('skip-options-visible');
           }
@@ -157,7 +154,6 @@ Custom property | Description | Default
 
       jumpToContent: function(e, detail) {
         e.preventDefault();
-        console.log("content jump");
         this.fire('skiptocontent', {skipToContent: true});
         this.querySelector('#skip-options').classList.toggle('skip-options-visible');
       }
