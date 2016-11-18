@@ -67,7 +67,7 @@ Custom property | Description | Default
     <iron-a11y-keys id="search-keys" target="[[_targetSearch]]" keys="enter" on-keys-pressed="jumpToSearch"></iron-a11y-keys>
     <iron-a11y-keys id="content-keys" target="[[_targetContent]]" keys="enter" on-keys-pressed="jumpToContent"></iron-a11y-keys>
     <div id="skip-options" class="skip-options-hidden" tabindex="0" on-focus="showSkipNavigation" on-blur="hideSkipNavigation" aria-label="Skip Navigation Options, 2 links">
-      <a id="search" href$="#{{searchId}}" on-tap="jumpToSearch" tabindex="">{{skipSearchText}}</a> <br/>
+      <a id="search" href$="#{{searchId}}" on-tap="jumpToSearch" on-focus="showSkipNavigation" tabindex="">{{skipSearchText}}</a> <br/>
       <a id="content" href$="#{{contentId}}" on-tap="jumpToContent" tabindex="" on-blur="hideSkipNavigation" on-focus="showSkipNavigation">{{skipContentText}}</a>
     </div>
   </template>
@@ -141,7 +141,6 @@ Custom property | Description | Default
       },
 
       hideSkipNavigation: function(e) {
-        console.log(e.relatedTarget);
         if (e.relatedTarget) {
           if (e.relatedTarget.id == 'search') {
           } else {
