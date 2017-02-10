@@ -23,7 +23,7 @@ Custom property | Description | Default
       :host {
         display: block;
         --uvalib-skip-nav-color: white;
-        --uvalib-skip-nav-bkgrd-color: red;
+        --uvalib-skip-nav-bkgrd-color: #b60000;
       }
       .skip-options-hidden {
         padding: 5px;
@@ -66,7 +66,7 @@ Custom property | Description | Default
     </style>
     <iron-a11y-keys id="search-keys" target="[[_targetSearch]]" keys="enter" on-keys-pressed="jumpToSearch"></iron-a11y-keys>
     <iron-a11y-keys id="content-keys" target="[[_targetContent]]" keys="enter" on-keys-pressed="jumpToContent"></iron-a11y-keys>
-    <div id="skip-options" class="skip-options-hidden" tabindex="0" on-focus="showSkipNavigation" on-blur="hideSkipNavigation" aria-label="Skip Navigation Options, 2 links">
+    <div id="skip-options" class="skip-options-hidden" tabindex="0" on-focus="showSkipNavigation" on-blur="hideSkipNavigation" aria-label="Skip Navigation Options, 2 links" aria-hidden="true">
       <a id="search" href$="#{{searchId}}" on-tap="jumpToSearch" on-focus="showSkipNavigation" tabindex="">{{skipSearchText}}</a> <br/>
       <a id="content" href$="#{{contentId}}" on-tap="jumpToContent" tabindex="" on-blur="hideSkipNavigation" on-focus="showSkipNavigation">{{skipContentText}}</a>
     </div>
