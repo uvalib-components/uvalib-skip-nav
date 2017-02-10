@@ -3,6 +3,10 @@
   "description": "Skip to page content",
   "main": "uvalib-skip-nav.html",
   "dependencies": {
-    "uvalib-elements":"uvalib-components/uvalib-elements#latest"
+    "uvalib-elements": "uvalib-components/uvalib-elements#latest"
+  },
+  "resolutions": {
+    "polymer": "^1.7.1",
+    "lodash": "^4.17.4"
   }
 }
