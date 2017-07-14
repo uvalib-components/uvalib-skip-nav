@@ -118,43 +118,43 @@ Custom property | Description | Default
         _targetSearch: {
           type: Object,
           value: function() {
-            return this.querySelector('#search');
+            return this.$$('#search');
           }
         },
 
         _targetContent: {
           type: Object,
           value: function() {
-            return this.querySelector('#content');
+            return this.$$('#content');
           }
         }
       },
 
       showSkipNavigation: function() {
-        this.querySelector('#skip-options').classList.add('skip-options-visible');
+        this.$$('#skip-options').classList.add('skip-options-visible');
       },
 
       jumpToSearch: function(e, detail) {
         e.preventDefault();
         this.fire('skiptosearch', {skipToSearch: true});
-        this.querySelector('#skip-options').classList.toggle('skip-options-visible');
+        this.$$('#skip-options').classList.toggle('skip-options-visible');
       },
 
       hideSkipNavigation: function(e) {
         if (e.relatedTarget) {
           if (e.relatedTarget.id == 'search') {
           } else {
-            this.querySelector('#skip-options').classList.toggle('skip-options-visible');
+            this.$$('#skip-options').classList.toggle('skip-options-visible');
           }
         } else {
-          this.querySelector('#skip-options').classList.toggle('skip-options-visible');
+          this.$$('#skip-options').classList.toggle('skip-options-visible');
         }
       },
 
       jumpToContent: function(e, detail) {
         e.preventDefault();
         this.fire('skiptocontent', {skipToContent: true});
-        this.querySelector('#skip-options').classList.toggle('skip-options-visible');
+        this.$$('#skip-options').classList.toggle('skip-options-visible');
       }
 
     });
