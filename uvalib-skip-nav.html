@@ -1,162 +1,128 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-a11y-keys/iron-a11y-keys.html">
 <link rel="import" href="../uvalib-theme/uvalib-theme.html">
-
-<!--
-`uvalib-skip-nav`
-Accessibility component that becomes visible on focus and allows for jumping to the main content.
-
-### Styling
-
-The following custom properties are available for styling:
-
-Custom property | Description | Default
-----------------|-------------|----------
-`--uvalib-skip-nav-color` | Color of skip text | white
-`--uvalib-skip-nav-bkgrd-color` | Background color of skip hyperlink | red
-
-@demo demo/index.html
--->
+<link rel="import" href="../uvalib-theme/uvalib-skip-nav-style.html">
+<link rel="import" href="../uvalib-theme/uvalib-ui-element.html">
 
 <dom-module id="uvalib-skip-nav">
   <template>
-    <style is="custom-style" include="uvalib-theme">
-      :host {
-        display: block;
-        --uvalib-skip-nav-color: white;
-        --uvalib-skip-nav-bkgrd-color: #b60000;
-      }
-      .skip-options-hidden {
-        padding: 5px;
-        position: absolute;
-        top: -100px;
-        left: 0px;
-        color: var(--uvalib-skip-nav-color,white);
-        background-color: var(--uvalib-skip-nav-bkgrd-color,red);
-        border-right: 1px solid var(--color-primary-blue);
-        border-bottom: 1px solid var(--color-primary-blue);
-        border-bottom-right-radius: 8px;
-        z-index: 2000;
-      }
-      @keyframes drop-in {
-        from {top: -100px;}
-        to {top: 0px;}
-      }
-      a {
-        color: var(--uvalib-skip-nav-color,white);
-        width: auto;
-        height: auto;
-        overflow: visible;
-      }
-      .skip-options-visible {
-        animation: drop-in;
-        animation-duration: 1s;
-        animation-timing-function: ease-out;
-        animation-delay: .5s;
-        animation-iteration-count: 1;
-        animation-direction: normal;
-        animation-fill-mode: forwards;
-        -webkit-animation: drop-in;
-        -webkit-animation-duration: 1s;
-        -webkit-animation-timing-function: ease-out;
-        -webkit-animation-delay: .5s;
-        -webkit-animation-iteration-count: 1;
-        -webkit-animation-direction: normal;
-        -webkit-animation-fill-mode: forwards;
-      }
-    </style>
-    <iron-a11y-keys id="search-keys" target="[[_targetSearch]]" keys="enter" on-keys-pressed="jumpToSearch"></iron-a11y-keys>
-    <iron-a11y-keys id="content-keys" target="[[_targetContent]]" keys="enter" on-keys-pressed="jumpToContent"></iron-a11y-keys>
-    <div id="skip-options" class="skip-options-hidden" tabindex="0" on-focus="showSkipNavigation" on-blur="hideSkipNavigation" aria-label="Skip Navigation Options, 2 links" aria-hidden="true">
-      <a id="search" href$="#{{searchId}}" on-tap="jumpToSearch" on-focus="showSkipNavigation" tabindex="">{{skipSearchText}}</a> <br/>
-      <a id="content" href$="#{{contentId}}" on-tap="jumpToContent" tabindex="" on-blur="hideSkipNavigation" on-focus="showSkipNavigation">{{skipContentText}}</a>
-    </div>
+    <custom-style>
+      <style include="uvalib-theme uvalib-skip-nav-style">
+      </style>
+    </custom-style>
+
+    <iron-a11y-keys id="content-keys" target="[[_targetContent]]" keys="enter" on-keys-pressed="_jumpToContent"></iron-a11y-keys>
+    <iron-a11y-keys id="search-keys" target="[[_targetSearch]]" keys="enter" on-keys-pressed="_jumpToSearch"></iron-a11y-keys>
+    <iron-a11y-keys id="navigation-keys" target="[[_targetNavigation]]" keys="enter" on-keys-pressed="_jumpToNavigation"></iron-a11y-keys>
+    <iron-a11y-keys id="header-keys" target="[[_targetHeader]]" keys="enter" on-keys-pressed="_jumpToHeader"></iron-a11y-keys>
+    <iron-a11y-keys id="footer-keys" target="[[_targetFooter]]" keys="enter" on-keys-pressed="_jumpToFooter"></iron-a11y-keys>
+
+    <nav id="jumpToOptions" class="jump-to-options-hidden" aria-labelledby="accessibility" tabindex="0" on-focus="_showJumpNavigation" on-blur="_hideJumpNavigation" aria-hidden="true">
+      <h2 id="accessibility">Skip To</h2>
+      <ul>
+        <li><a id="search" on-tap="_jumpToSearch" href="">Search</a></li>
+        <li><a id="content" on-tap="_jumpToContent" href="">Main Content</a></li>
+        <li><a id="navigation" on-tap="_jumpToNavigation" href="">Navigation</a></li>
+        <li><a id="header" on-tap="_jumpToHeader" href="">Header</a></li>
+        <li><a id="footer" on-tap="_jumpToFooter" href="">Footer</a></li>
+      </ul>
+    </nav>
+
   </template>
 
   <script>
-    Polymer({
+  /**
+   * `uvalib-skip-nav`
+   * Accessibility component that becomes visible on focus and allows for jumping to landmark content.
+   *
+   * ### Styling
+   *
+   * The following custom properties are available for styling:
+   *
+   * Custom property | Description | Default
+   * ----------------|-------------|----------
+   * `--uvalib-skip-nav-color` | Color of skip text | white
+   * `--uvalib-skip-nav-bkgrd-color` | Background color of skip hyperlink | red
+   *
+   * @customElement
+   * @polymer
+   * @demo demo/index.html
+   */
+  //class UvalibSkipNav extends UvalibUiElement {
+  class UvalibSkipNav extends Polymer.Element {
+    static get is() { return 'uvalib-skip-nav'; }
+    static get properties() {
+        return {
+            _targetContent: {
+              type: Object
+            },
+            _targetSearch: {
+              type: Object
+            },
+            _targetNavigation: {
+              type: Object
+            },
+            _targetHeader: {
+              type: Object
+            },
+            _targetFooter: {
+              type: Object
+            }
+          };
+    }
 
-      is: 'uvalib-skip-nav',
+    ready() {
+      super.ready();
+      this._targetContent = this.$.content;
+      this._targetSearch = this.$.search;
+      this._targetNavigation = this.$.navigation;
+      this._targetHeader = this.$.header;
+      this._targetFooter = this.$.footer;
+    }
 
-      hostAttributes: {
-        tabindex: -1
-      },
+    _showJumpNavigation(e) {
+      this.$.jumpToOptions.classList.add('jump-to-options-visible');
+      this.$.search.focus();
+    }
 
-      properties: {
-
-        /**
-         * id attribute of the element to jump to
-         */
-        contentId: {
-          type: String,
-          value: 'content',
-        },
-
-        /**
-         * skip text to display
-         */
-        skipContentText: {
-          type: String,
-          value: 'Skip to main content.'
-        },
-
-        /**
-         * id attribute of the element to jump to
-         */
-        searchId: {
-          type: String,
-          value: 'search',
-        },
-
-        /**
-         * skip text to display
-         */
-        skipSearchText: {
-          type: String,
-          value: 'Skip to catalog search.'
-        },
-
-        _targetSearch: {
-          type: Object,
-          value: function() {
-            return this.$$('#search');
-          }
-        },
-
-        _targetContent: {
-          type: Object,
-          value: function() {
-            return this.$$('#content');
-          }
-        }
-      },
-
-      showSkipNavigation: function() {
-        this.$$('#skip-options').classList.add('skip-options-visible');
-      },
-
-      jumpToSearch: function(e, detail) {
-        e.preventDefault();
-        this.fire('skiptosearch', {skipToSearch: true});
-        this.$$('#skip-options').classList.toggle('skip-options-visible');
-      },
-
-      hideSkipNavigation: function(e) {
-        if (e.relatedTarget) {
-          if (e.relatedTarget.id == 'search') {
-          } else {
-            this.$$('#skip-options').classList.toggle('skip-options-visible');
-          }
+    _hideJumpNavigation(e) {
+      if (e.relatedTarget) {
+        if (e.relatedTarget.id == 'search') {
         } else {
-          this.$$('#skip-options').classList.toggle('skip-options-visible');
+          this.$.jumpToOptions.classList.toggle('jump-to-options-visible');
         }
-      },
-
-      jumpToContent: function(e, detail) {
-        e.preventDefault();
-        this.fire('skiptocontent', {skipToContent: true});
-        this.$$('#skip-options').classList.toggle('skip-options-visible');
+      } else {
+        this.$.jumpToOptions.classList.toggle('jump-to-options-visible');
       }
+    }
 
-    });
+    _jumpToSearch(e) {
+      e.preventDefault();
+      this.dispatchEvent(new CustomEvent('jumpToSearch', { bubbles: true, composed: true }));
+      this.$.jumpToOptions.classList.toggle('jump-to-options-visible');
+    }
+    _jumpToContent(e) {
+      e.preventDefault();
+      this.dispatchEvent(new CustomEvent('jumpToContent', { bubbles: true, composed: true }));
+      this.$.jumpToOptions.classList.toggle('jump-to-options-visible');
+    }
+    _jumpToNavigation(e) {
+      e.preventDefault();
+      this.dispatchEvent(new CustomEvent('jumpToNavigation', { bubbles: true, composed: true }));
+      this.$.jumpToOptions.classList.toggle('jump-to-options-visible');
+    }
+    _jumpToHeader(e) {
+      e.preventDefault();
+      this.dispatchEvent(new CustomEvent('jumpToHeader', { bubbles: true, composed: true }));
+      this.$.jumpToOptions.classList.toggle('jump-to-options-visible');
+    }
+    _jumpToFooter(e) {
+      e.preventDefault();
+      this.dispatchEvent(new CustomEvent('jumpToFooter', { bubbles: true, composed: true }));
+      this.$.jumpToOptions.classList.toggle('jump-to-options-visible');
+    }
+  }
+
+  window.customElements.define(UvalibSkipNav.is, UvalibSkipNav);
   </script>
 </dom-module>
