@@ -82,6 +82,7 @@
 
     _showJumpNavigation(e) {
       this.$.jumpToOptions.classList.add('jump-to-options-visible');
+      this.$.jumpToOptions.setAttribute('aria-hidden','false');
       this.$.search.focus();
     }
 
@@ -90,9 +91,15 @@
         if (e.relatedTarget.id == 'search') {
         } else {
           this.$.jumpToOptions.classList.toggle('jump-to-options-visible');
+          if (this.$.jumpToOptions.getAttribute('aria-hidden') == 'true') {
+            this.$.jumpToOptions.setAttribute('aria-hidden','false');
+          }
         }
       } else {
         this.$.jumpToOptions.classList.toggle('jump-to-options-visible');
+        if (this.$.jumpToOptions.getAttribute('aria-hidden') == 'true') {
+          this.$.jumpToOptions.setAttribute('aria-hidden','false');
+        }
       }
     }
 
