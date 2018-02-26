@@ -80,13 +80,13 @@
       this._targetFooter = this.$.footer;
     }
 
-    showJumpNavigation(e) {
+    showJumpNavigation() {
       this.$.jumpToOptions.classList.add('jump-to-options-visible');
       this.$.jumpToOptions.setAttribute('aria-hidden','false');
       this.$.search.focus();
     }
 
-    hideJumpNavigation(e) {
+    hideJumpNavigation() {
       if (this.$.jumpToOptions.getAttribute('aria-hidden') == 'true') {
         this.$.jumpToOptions.setAttribute('aria-hidden','false');
       }
