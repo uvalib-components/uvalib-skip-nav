@@ -80,43 +80,50 @@
       this._targetFooter = this.$.footer;
     }
 
-    showJumpNavigation() {
+    _showJumpNavigation(e) {
       this.$.jumpToOptions.classList.add('jump-to-options-visible');
-      this.$.jumpToOptions.setAttribute('aria-hidden','false');
       this.$.search.focus();
+      this.$.jumpToOptions.setAttribute('aria-hidden','false');
     }
 
-    hideJumpNavigation() {
-      if (this.$.jumpToOptions.getAttribute('aria-hidden') == 'true') {
-        this.$.jumpToOptions.setAttribute('aria-hidden','false');
+    _hideJumpNavigation(e) {
+      if (e.relatedTarget) {
+        if (e.relatedTarget.id == 'search') {
+        } else {
+          this.$.jumpToOptions.classList.toggle('jump-to-options-visible');
+          if (this.$.jumpToOptions.getAttribute('aria-hidden') == 'true') {
+            this.$.jumpToOptions.setAttribute('aria-hidden','false');
+          }
+        }
+      } else {
+        this.$.jumpToOptions.classList.toggle('jump-to-options-visible');
       }
-      this.$.jumpToOptions.classList.remove('jump-to-options-visible');
     }
 
     _jumpToSearch(e) {
       e.preventDefault();
       this.dispatchEvent(new CustomEvent('jumpToSearch', { bubbles: true, composed: true }));
-      this.$.jumpToOptions.classList.remove('jump-to-options-visible');
+      this.$.jumpToOptions.classList.toggle('jump-to-options-visible');
     }
     _jumpToContent(e) {
       e.preventDefault();
       this.dispatchEvent(new CustomEvent('jumpToContent', { bubbles: true, composed: true }));
-      this.$.jumpToOptions.classList.remove('jump-to-options-visible');
+      this.$.jumpToOptions.classList.toggle('jump-to-options-visible');
     }
     _jumpToNavigation(e) {
       e.preventDefault();
       this.dispatchEvent(new CustomEvent('jumpToNavigation', { bubbles: true, composed: true }));
-      this.$.jumpToOptions.classList.remove('jump-to-options-visible');
+      this.$.jumpToOptions.classList.toggle('jump-to-options-visible');
     }
     _jumpToHeader(e) {
       e.preventDefault();
       this.dispatchEvent(new CustomEvent('jumpToHeader', { bubbles: true, composed: true }));
-      this.$.jumpToOptions.classList.remove('jump-to-options-visible');
+      this.$.jumpToOptions.classList.toggle('jump-to-options-visible');
     }
     _jumpToFooter(e) {
       e.preventDefault();
       this.dispatchEvent(new CustomEvent('jumpToFooter', { bubbles: true, composed: true }));
-      this.$.jumpToOptions.classList.remove('jump-to-options-visible');
+      this.$.jumpToOptions.classList.toggle('jump-to-options-visible');
     }
   }
 
