@@ -1,6 +1,8 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-a11y-keys/iron-a11y-keys.html">
 <link rel="import" href="../uvalib-theme/uvalib-theme.html">
+<link rel="import" href="../uvalib-theme/uvalib-icons.html">
+<!-- link rel="import" href="../iron-icons/iron-icon.html" / -->
 <link rel="import" href="../uvalib-theme/uvalib-skip-nav-style.html">
 <link rel="import" href="../uvalib-theme/uvalib-ui-element.html">
 
@@ -8,26 +10,200 @@
   <template>
     <custom-style>
       <style include="uvalib-theme uvalib-skip-nav-style">
+      .skipTo {
+      	padding: .5em;
+      	position: absolute;
+      	background: transparent;
+      	color: #000;
+      	-webkit-transition: top .5s ease-out, background .5s linear;
+      	-moz-transition: top .5s ease-out, background .5s linear;
+      	-o-transition: top .5s ease-out, background .5s linear;
+      	transition: top .5s ease-out, background .5s linear;
+      }
+      .skipTo:focus {
+      	position: absolute;
+      	top: 0;
+      	left: 0;
+      	background: #ccc;
+      	z-index: 100000;
+      	text-decoration: underline;
+      	-webkit-transition: top .1s ease-in, background .3s linear;
+      	-moz-transition: top .1s ease-in, background .3s linear;
+      	-o-transition: top .1s ease-in, background .3s linear;
+      	transition: top .1s ease-in, background .3s linear;
+      }
+      .onFocus {
+      	top: -8em;
+      	left: 0;
+      }
+      .onLoad {
+      	top: 0;
+      	left: 0;
+      	background: #ccc;
+      }
+      .dropup, .dropMenu {
+      	position: relative;
+      }
+      .dropMenu-toggle {
+      	*margin-bottom: -3px;
+      }
+      .dropMenu-toggle:active, .open .dropMenu-toggle {
+      	outline: 0;
+      }
+      #skipToMenu .caret {
+        --iron-icon {
+          display: inline-block;
+        	width: 0;
+        	height: 0;
+        	vertical-align: top;
+        	border-top: 4px solid #000;
+        	border-right: 4px solid transparent;
+        	border-left: 4px solid transparent;
+        }
+      }
+      #skipToMenu .dropMenu .caret {
+        --iron-icon {
+          margin-top: 8px;
+        	margin-left: 2px;
+        }
+      }
+      .dropMenu-menu {
+      	position: absolute;
+      	top: 100%;
+      	left: 0;
+      	z-index: 100000;
+      	display: none;
+      	float: left;
+      	min-width: 160px;
+      	padding: 5px 0;
+      	margin: 2px 0 0;
+      	list-style: none;
+      	background-color: #fff;
+      	border: 1px solid #ccc;
+      	border: 1px solid rgba(0, 0, 0, 0.2);
+      	*border-right-width: 2px;
+      	*border-bottom-width: 2px;
+      	-webkit-border-radius: 6px;
+      	-moz-border-radius: 6px;
+      	border-radius: 6px;
+      	-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      	-moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      	-webkit-background-clip: padding-box;
+      	-moz-background-clip: padding;
+      	background-clip: padding-box;
+      }
+      .dropMenu-menu.pull-right {
+      	right: 0;
+      	left: auto;
+      }
+      .dropMenu-menu .divider {
+      	*width: 100%;
+      	height: 1px;
+      	margin: 9px 1px;
+      	*margin: -5px 0 5px;
+      	overflow: hidden;
+      	background-color: #e5e5e5;
+      	border-bottom: 1px solid #fff;
+      }
+      .dropMenu-menu>li>a {
+      	display: block;
+      	padding: 3px 20px;
+      	clear: both;
+      	font-weight: normal;
+      	line-height: 20px;
+      	color: #333;
+      	white-space: nowrap;
+      	text-decoration: none;
+      }
+      .dropMenu-menu>li[role=separator] {
+      	padding-left: 20px;
+      	margin-top: 9px;
+      	font-weight: bold;
+      	border-bottom: thin solid black;
+      }
+      .dropMenu-menu>li>a:hover, .dropMenu-menu>li>a:focus {
+      	text-decoration: none;
+      	color: #fff;
+      	background-color: #0081c2;
+      	background-image: -moz-linear-gradient(top, #08c, #0077b3);
+      	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#08c), to(#0077b3));
+      	background-image: -webkit-linear-gradient(top, #08c, #0077b3);
+      	background-image: -o-linear-gradient(top, #08c, #0077b3);
+      	background-image: linear-gradient(to bottom, #08c, #0077b3);
+      	background-repeat: repeat-x;
+      	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0);
+      }
+      .dropMenu-menu>.active>a, .dropMenu-menu>.active>a:hover, .dropMenu-menu>.active>a:focus {
+      	color: #fff;
+      	text-decoration: none;
+      	outline: 0;
+      	background-color: #0081c2;
+      	background-image: -moz-linear-gradient(top, #08c, #0077b3);
+      	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#08c), to(#0077b3));
+      	background-image: -webkit-linear-gradient(top, #08c, #0077b3);
+      	background-image: -o-linear-gradient(top, #08c, #0077b3);
+      	background-image: linear-gradient(to bottom, #08c, #0077b3);
+      	background-repeat: repeat-x;
+      	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0);
+      }
+      .dropMenu-menu>.disabled>a, .dropMenu-menu>.disabled>a:hover, .dropMenu-menu>.disabled>a:focus {
+      	color: #999;
+      }
+      .dropMenu-menu>.disabled>a:hover, .dropMenu-menu>.disabled>a:focus {
+      	text-decoration: none;
+      	background-color: transparent;
+      	background-image: none;
+      	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+      	cursor: default;
+      }
+      .open {
+      	*z-index: 100000;
+        display: block;
+      }
+/*      .open .dropMenu-menu {
+      	display: block;
+      }
+*/      .pull-right>.dropMenu-menu {
+      	right: 0;
+      	left: auto;
+      }
+      #skipToMenu .dropup .caret {
+      	border-top: 0;
+      	border-bottom: 4px solid #000;
+      	content: '';
+      }
+      #skipToMenu .dropup .dropMenu-menu {
+      	top: auto;
+      	bottom: 100%;
+      	margin-bottom: 1px;
+      }
       </style>
     </custom-style>
 
-    <iron-a11y-keys id="content-keys" target="[[_targetContent]]" keys="enter" on-keys-pressed="_jumpToContent"></iron-a11y-keys>
-    <iron-a11y-keys id="search-keys" target="[[_targetSearch]]" keys="enter" on-keys-pressed="_jumpToSearch"></iron-a11y-keys>
-    <iron-a11y-keys id="navigation-keys" target="[[_targetNavigation]]" keys="enter" on-keys-pressed="_jumpToNavigation"></iron-a11y-keys>
-    <iron-a11y-keys id="header-keys" target="[[_targetHeader]]" keys="enter" on-keys-pressed="_jumpToHeader"></iron-a11y-keys>
-    <iron-a11y-keys id="footer-keys" target="[[_targetFooter]]" keys="enter" on-keys-pressed="_jumpToFooter"></iron-a11y-keys>
+    <iron-a11y-keys target="[[_targetDrop4]]" keys="enter space" on-keys-pressed="_showJumpNavigation"></iron-a11y-keys>
+    <iron-a11y-keys target="[[_targetContent]]" keys="esc" on-keys-pressed="_skipToButtonShow"></iron-a11y-keys>
+    <iron-a11y-keys target="[[_targetSearch]]" keys="esc" on-keys-pressed="_skipToButtonShow"></iron-a11y-keys>
+    <iron-a11y-keys target="[[_targetNavigation]]" keys="esc" on-keys-pressed="_skipToButtonShow"></iron-a11y-keys>
+    <iron-a11y-keys target="[[_targetHeader]]" keys="esc" on-keys-pressed="_skipToButtonShow"></iron-a11y-keys>
+    <iron-a11y-keys target="[[_targetFooter]]" keys="esc" on-keys-pressed="_skipToButtonShow"></iron-a11y-keys>
+    <iron-a11y-keys target="[[_targetContent]]" keys="enter" on-keys-pressed="_jumpToContent"></iron-a11y-keys>
+    <iron-a11y-keys target="[[_targetSearch]]" keys="enter" on-keys-pressed="_jumpToSearch"></iron-a11y-keys>
+    <iron-a11y-keys target="[[_targetNavigation]]" keys="enter" on-keys-pressed="_jumpToNavigation"></iron-a11y-keys>
+    <iron-a11y-keys target="[[_targetHeader]]" keys="enter" on-keys-pressed="_jumpToHeader"></iron-a11y-keys>
+    <iron-a11y-keys target="[[_targetFooter]]" keys="enter" on-keys-pressed="_jumpToFooter"></iron-a11y-keys>
 
-    <nav id="jumpToOptions" class="jump-to-options-hidden" aria-labelledby="accessibility" tabindex="0" aria-hidden="true">
-      <h2 id="accessibility">Skip To</h2>
-      <ul>
-        <li><a id="search" on-tap="_jumpToSearch" href="">Search</a></li>
-        <li><a id="content" on-tap="_jumpToContent" href="">Main Content</a></li>
-        <li><a id="navigation" on-tap="_jumpToNavigation" href="">Navigation</a></li>
-        <li><a id="header" on-tap="_jumpToHeader" href="">Header</a></li>
-        <li><a id="footer" on-tap="_jumpToFooter" href="">Footer</a></li>
+    <div id="skipToMenu" role="complementary" title="Skip To Keyboard Navigation" class="dropMenu">
+      <a accesskey="0" tabindex="0" class="dropMenu-toggle skipTo onFocus" id="drop4" role="button" aria-haspopup="true" aria-expanded="false" href="#">Skip To...<iron-icon class="caret" icon="caret-down"></iron-icon></a>
+      <ul id="menu1" class="dropMenu-menu" role="menu" aria-label="Skip To" style="top:3%; text-align:left">
+        <li role="separator">Skip To</li>
+        <li role="presentation"><a id="search" tabindex="-1" role="menuitem" href="" on-tap="_jumpToSearch">Search</a></li>
+        <li role="presentation"><a id="content" tabindex="-1" role="menuitem" href="" on-tap="_jumpToContent">Main Content</a></li>
+        <li role="presentation"><a id="navigation" tabindex="-1" role="menuitem" href="" on-tap="_jumpToNavigation">Navigation</a></li>
+        <li role="presentation"><a id="header" tabindex="-1" role="menuitem" href="" on-tap="_jumpToHeader">Header</a></li>
+        <li role="presentation"><a id="footer" tabindex="-1" role="menuitem" href="" on-tap="_jumpToFooter">Footer</a></li>
       </ul>
-    </nav>
-
+    </div>
   </template>
 
   <script>
@@ -53,6 +229,9 @@
     static get is() { return 'uvalib-skip-nav'; }
     static get properties() {
         return {
+            _targetAccessibility: {
+              type: Object
+            },
             _targetContent: {
               type: Object
             },
@@ -73,57 +252,58 @@
 
     ready() {
       super.ready();
+      this._targetDrop4= this.$.drop4;
       this._targetContent = this.$.content;
       this._targetSearch = this.$.search;
       this._targetNavigation = this.$.navigation;
       this._targetHeader = this.$.header;
       this._targetFooter = this.$.footer;
+      this.$.drop4.addEventListener('focus', e => {this._skipToButtonShow(e)});
+      this.$.drop4.addEventListener('blur', e => {this._skipToButtonHide(e)});
+      this.$.drop4.addEventListener('onClick', e => {this._showJumpNavigation(e)});
+    }
+
+    _skipToButtonShow(e) {
+      this.$.drop4.classList.remove('onFocus');
+      this.$.menu1.classList.remove('open');
+      this.$.menu1.setAttribute('aria-expanded', 'false');
+      this.$.drop4.focus();
+    }
+    _skipToButtonHide(e) {
+      this.$.drop4.classList.add('onFocus');
+      this.$.menu1.setAttribute('aria-expanded', 'true');
     }
 
     _showJumpNavigation(e) {
-      this.$.jumpToOptions.classList.add('jump-to-options-visible');
+      e.preventDefault();
+      this.$.menu1.classList.toggle('open');
       this.$.search.focus();
-      this.$.jumpToOptions.setAttribute('aria-hidden','false');
+      console.log(e);
     }
 
     _hideJumpNavigation(e) {
-      if (e.relatedTarget) {
-        if (e.relatedTarget.id == 'search') {
-        } else {
-          this.$.jumpToOptions.classList.toggle('jump-to-options-visible');
-          if (this.$.jumpToOptions.getAttribute('aria-hidden') == 'true') {
-            this.$.jumpToOptions.setAttribute('aria-hidden','false');
-          }
-        }
-      } else {
-        this.$.jumpToOptions.classList.toggle('jump-to-options-visible');
-      }
+      console.log('fix this method');
     }
 
     _jumpToSearch(e) {
       e.preventDefault();
       this.dispatchEvent(new CustomEvent('jumpToSearch', { bubbles: true, composed: true }));
-      this.$.jumpToOptions.classList.toggle('jump-to-options-visible');
     }
     _jumpToContent(e) {
       e.preventDefault();
       this.dispatchEvent(new CustomEvent('jumpToContent', { bubbles: true, composed: true }));
-      this.$.jumpToOptions.classList.toggle('jump-to-options-visible');
     }
     _jumpToNavigation(e) {
       e.preventDefault();
       this.dispatchEvent(new CustomEvent('jumpToNavigation', { bubbles: true, composed: true }));
-      this.$.jumpToOptions.classList.toggle('jump-to-options-visible');
     }
     _jumpToHeader(e) {
       e.preventDefault();
       this.dispatchEvent(new CustomEvent('jumpToHeader', { bubbles: true, composed: true }));
-      this.$.jumpToOptions.classList.toggle('jump-to-options-visible');
     }
     _jumpToFooter(e) {
       e.preventDefault();
       this.dispatchEvent(new CustomEvent('jumpToFooter', { bubbles: true, composed: true }));
-      this.$.jumpToOptions.classList.toggle('jump-to-options-visible');
     }
   }
 
