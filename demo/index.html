@@ -14,6 +14,7 @@
 
     <style is="custom-style" include="demo-pages-shared-styles">
     </style>
+
   </head>
   <body>
 
@@ -21,24 +22,24 @@
       <h3>Basic uvalib-skip-nav Demo</h3>
       <demo-snippet>
         <template>
-          <uvalib-skip-nav></uvalib-skip-nav>
-          <div id="header" style="Background-color: blue; color: white;">
-            <p>logo here</p>
+          <uvalib-skip-nav id="skipNav"></uvalib-skip-nav>
+          <div id="header" style="Background-color: blue; color: white;" tabindex="-1">
+            <p tabindex="0">logo here</p>
             <nav role="navigation" style="color: red">
-              <a href="#item1" style="color: white">Navigation Item 1</a> |
+              <a id="firstNavItem" href="#item1" style="color: white">Navigation Item 1</a> |
               <a href="#item2" style="color: white">Navigation Item 2</a> |
               <a href="#item3" style="color: white">Navigation Item 3</a>
             </nav>
           </div>
-          <div id="search">
+          <div id="search" tabindex="-1">
             <div id="item1b">
               <h3>Search Box</h3>
               <input type="text">
               <button name="Search">
             </div>
           </div>
-          <div id="content">
-            <p>This is some text in the main content area.</p>
+          <div id="content" tabindex="-1">
+            <p tabindex="0">This is some text in the main content area.</p>
             <div id="item1">
               <h3>Item 1</h3>
               Item one content is located here.
@@ -53,9 +54,29 @@
               Item two content is located in this area.
             </div>
           </div>
-          <div id="footer" style="Background-color: blue; color: white;">
-            <p>Footer information here</p>
+          <div id="footer" style="Background-color: blue; color: white;" tabindex="-1">
+            <p tabindex="0">Footer information here</p>
+            <p>
+              bottom bar content goes here
+            </p>
           </div>
+          <script>
+            document.getElementById("skipNav").addEventListener("jumpToSearch", function() {
+              document.getElementById("search").focus();
+            });
+            document.getElementById("skipNav").addEventListener("jumpToNavigation", function() {
+              document.getElementById("firstNavItem").focus();
+            });
+            document.getElementById("skipNav").addEventListener("jumpToContent", function() {
+              document.getElementById("content").focus();
+            });
+/*            document.getElementById("skipNav").addEventListener("jumpToHeader", function() {
+              document.getElementById("header").focus();
+            });
+            document.getElementById("skipNav").addEventListener("jumpToFooter", function() {
+              document.getElementById("footer").focus();
+            });*/
+          </script>
         </template>
       </demo-snippet>
     </div>

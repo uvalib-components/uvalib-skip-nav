@@ -148,8 +148,8 @@
         <li role="presentation"><a id="search" tabindex="-1" role="menuitem" href="" on-tap="_jumpToSearch">Search</a></li>
         <li role="presentation"><a id="content" tabindex="-1" role="menuitem" href="" on-tap="_jumpToContent">Main Content</a></li>
         <li role="presentation"><a id="navigation" tabindex="-1" role="menuitem" href="" on-tap="_jumpToNavigation">Navigation</a></li>
-        <li role="presentation"><a id="header" tabindex="-1" role="menuitem" href="" on-tap="_jumpToHeader">Header</a></li>
-        <li role="presentation"><a id="footer" tabindex="-1" role="menuitem" href="" on-tap="_jumpToFooter">Footer</a></li>
+        <!-- li role="presentation"><a id="header" tabindex="-1" role="menuitem" href="" on-tap="_jumpToHeader">Header</a></li>
+        <li role="presentation"><a id="footer" tabindex="-1" role="menuitem" href="" on-tap="_jumpToFooter">Footer</a></li -->
       </ul>
     </div>
   </template>
@@ -180,7 +180,7 @@
             _skipToLandmarkCount: {
               type: Number,
               readOnly: true,
-              value: 5
+              value: 3 //5
             },
             _currentSkipToSelection: {
               type: Number
@@ -215,8 +215,8 @@
       this.$.search.addEventListener('focus', e => {this._focusedItem = 'search'});
       this.$.content.addEventListener('focus', e => {this._focusedItem = 'content'});
       this.$.navigation.addEventListener('focus', e => {this._focusedItem = 'navigation'});
-      this.$.header.addEventListener('focus', e => {this._focusedItem = 'header'});
-      this.$.footer.addEventListener('focus', e => {this._focusedItem = 'footer'});
+//      this.$.header.addEventListener('focus', e => {this._focusedItem = 'header'});
+//      this.$.footer.addEventListener('focus', e => {this._focusedItem = 'footer'});
     }
 
     _selectMenuItem(item) {
@@ -224,8 +224,8 @@
         case 1: this._focusedItem = 'search'; this.$.search.focus(); break;
         case 2: this._focusedItem = 'content'; this.$.content.focus(); break;
         case 3: this._focusedItem = 'navigation'; this.$.navigation.focus(); break;
-        case 4: this._focusedItem = 'header'; this.$.header.focus(); break;
-        case 5: this._focusedItem = 'footer'; this.$.footer.focus(); break;
+//        case 4: this._focusedItem = 'header'; this.$.header.focus(); break;
+//        case 5: this._focusedItem = 'footer'; this.$.footer.focus(); break;
       }
     }
 
@@ -235,8 +235,8 @@
         case 'search': this._jumpToSearch(e); break;
         case 'content': this._jumpToContent(e); break;
         case 'navigation': this._jumpToNavigation(e); break;
-        case 'header': this._jumpToHeader(e); break;
-        case 'footer': this._jumpToFooter(e); break;
+//        case 'header': this._jumpToHeader(e); break;
+//        case 'footer': this._jumpToFooter(e); break;
       }
     }
     _skipToButtonShow(e) {
