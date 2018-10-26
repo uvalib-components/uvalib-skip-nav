@@ -1,0 +1,24 @@
+{
+  "name": "uvalib-theme",
+  "description": "Common UVA Library styles",
+  "main": "uvalib-theme.html",
+  "dependencies": {
+    "uvalib-elements": "uvalib-components/uvalib-elements#master"
+  },
+  "resolutions": {
+    "lodash": "^4.17.4",
+    "paper-icon-button": "^2.0.1",
+    "webcomponentsjs": "^1.1.1",
+    "polymer": "^2.5.0"
+  },
+  "homepage": "https://github.com/uvalib-components/uvalib-theme",
+  "_release": "64e6cfb480",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "64e6cfb480ea2e44afc947fd085387e8606cbaf6"
+  },
+  "_source": "https://github.com/uvalib-components/uvalib-theme.git",
+  "_target": "master",
+  "_originalSource": "uvalib-components/uvalib-theme"
+}
